@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:EasySave.MVVM.ViewModels"
+        xmlns:models="using:EasySave.Models"
+        xmlns:converters="using:EasySave.MVVM.Converters"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+        x:Class="EasySave.MVVM.Views.AddBackupJobDialog"
+        Title="{Binding Source='AddBackupJob', Converter={StaticResource Loc}}"
+        Width="400" Height="300"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <converters:EnumLocalizationConverter x:Key="EnumLocConverter"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="{Binding Source='JobName', Converter={StaticResource Loc}}" 
+                     Margin="0,0,0,5"/>
+            <TextBox Text="{Binding Name}" 
+                    Margin="0,0,0,10"/>
+
+            <TextBlock Text="{Binding Source='SourcePath', Converter={StaticResource Loc}}" 
+                     Margin="0,0,0,5"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding SourcePath}" Grid.Column="0"/>
+                <Button Content="{Binding Source='Browse', Converter={StaticResource Loc}}" 
+                        Command="{Binding BrowseSourceCommand}" 
+                        Grid.Column="1" 
+                        Margin="5,0,0,0"/>
+            </Grid>
+
+            <TextBlock Text="{Binding Source='TargetPath', Converter={StaticResource Loc}}" 
+                     Margin="0,0,0,5"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding DestinationPath}" Grid.Column="0"/>
+                <Button Content="{Binding Source='Browse', Converter={StaticResource Loc}}" 
+                        Command="{Binding BrowseTargetCommand}" 
+                        Grid.Column="1" 
+                        Margin="5,0,0,0"/>
+            </Grid>
+
+            <TextBlock Text="{DynamicResource BackupType}" 
+                     Margin="0,0,0,5"/>
+            <ComboBox ItemsSource="{Binding Source={x:Static models:BackupTypeExtensions.AllValues}}"
+                      SelectedItem="{Binding BackupType}"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumLocConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{Binding ErrorMessage}" 
+                     Foreground="Red"
+                     VerticalAlignment="Center"/>
+
+            <Button Grid.Column="1"
+                    Content="{Binding Source='Cancel', Converter={StaticResource Loc}}" 
+                    Command="{Binding CancelCommand}" 
+                    Margin="0,0,10,0"
+                    MinWidth="80"/>
+
+            <Button Grid.Column="2"
+                    Content="{Binding Source='Save', Converter={StaticResource Loc}}" 
+                    Command="{Binding SaveCommand}"
+                    Background="{DynamicResource SystemAccentColor}"
+                    Foreground="White"
+                    MinWidth="80"
+                    IsDefault="True"/>
+        </Grid>
+    </Grid>
+</Window>

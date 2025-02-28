@@ -1,0 +1,166 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:EasySave.MVVM.ViewModels"
+        xmlns:models="using:EasySave.Models"
+        xmlns:converters="using:EasySave.MVVM.Converters"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="EasySave.MVVM.Views.MainWindow"
+        Title="{DynamicResource EasySave}">
+
+    <Window.Resources>
+        <converters:EnumLocalizationConverter x:Key="EnumLocConverter"/>
+        <converters:ComboBoxItemConverter x:Key="ComboBoxItemConverter"/>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource File}">
+                <MenuItem Header="{DynamicResource Settings}" 
+                         Command="{Binding GoToSettingsCommand}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Exit}" 
+                         Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Language}">
+                <MenuItem Header="{DynamicResource English}" Command="{Binding ChangeLanguageCommand}" CommandParameter="en"/>
+                <MenuItem Header="{DynamicResource French}" Command="{Binding ChangeLanguageCommand}" CommandParameter="fr"/>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Margin="10" SelectedIndex="{Binding SelectedTabIndex}">
+            <TabItem Header="{DynamicResource BackupJobs}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="{DynamicResource AddBackupJob}"
+                            Command="{Binding AddJobCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10"/>
+
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding BackupJobs}" 
+                             AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{DynamicResource JobName}" 
+                                              Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="{DynamicResource SourcePath}" 
+                                              Binding="{Binding SourcePath}"/>
+                            <DataGridTextColumn Header="{DynamicResource TargetPath}" 
+                                              Binding="{Binding DestinationPath}"/>
+                            <DataGridTextColumn Header="{DynamicResource BackupType}" 
+                                              Binding="{Binding Type, Converter={StaticResource EnumLocConverter}}"/>
+                            <DataGridTextColumn Header="{DynamicResource Status}" 
+                                              Binding="{Binding Status, Converter={StaticResource EnumLocConverter}}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="{DynamicResource Run}"
+                                                    Command="{Binding DataContext.RunJobCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="0,0,5,0"/>
+                                            <Button Content="{DynamicResource Stop}"
+                                                    Command="{Binding DataContext.StopJobCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="0,0,5,0"/>
+                                            <Button Content="{DynamicResource Delete}"
+                                                    Command="{Binding DataContext.DeleteJobCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="{DynamicResource RunAll}"
+                                Command="{Binding RunAllCommand}"
+                                Margin="0,0,10,0"/>
+                        <Button Content="{DynamicResource StopAll}"
+                                Command="{Binding StopAllCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource Settings}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{DynamicResource BusinessSoftware}" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding BusinessSoftware}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource EncryptExtensions}" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding EncryptExtensions}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource PriorityExtensions}" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding PriorityExtensions}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource MaxParallelJobs}" Margin="0,0,0,5"/>
+                    <NumericUpDown Value="{Binding MaxParallelJobs}" Minimum="1" Maximum="10" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource LargeFileThreshold}" Margin="0,0,0,5"/>
+                    <NumericUpDown Value="{Binding LargeFileThreshold}" 
+                                 Minimum="1" 
+                                 Maximum="1024"
+                                 Increment="1"
+                                 FormatString="F0"
+                                 Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource LogFormat}" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding LogFormat, Converter={StaticResource ComboBoxItemConverter}}" Margin="0,0,0,10">
+                        <ComboBoxItem Content="JSON" Tag="JSON"/>
+                        <ComboBoxItem Content="XML" Tag="XML"/>
+                    </ComboBox>
+
+                    <Button Content="{DynamicResource SaveSettings}"
+                            Command="{Binding SaveSettingsCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,10,0,0"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource Logs}">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="{DynamicResource RefreshLogs}"
+                                Command="{Binding RefreshLogsCommand}"
+                                Margin="0,0,10,0"/>
+                        <Button Content="{DynamicResource ClearLogs}"
+                                Command="{Binding ClearLogsCommand}"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="1" 
+                             ItemsSource="{Binding LogEntries}"
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{DynamicResource Timestamp}"
+                                              Binding="{Binding Timestamp}"/>
+                            <DataGridTextColumn Header="{DynamicResource JobName}"
+                                              Binding="{Binding JobName}"/>
+                            <DataGridTextColumn Header="{DynamicResource FileSource}"
+                                              Binding="{Binding FileSource}"/>
+                            <DataGridTextColumn Header="{DynamicResource FileTarget}"
+                                              Binding="{Binding FileTarget}"/>
+                            <DataGridTextColumn Header="{DynamicResource FileSize}"
+                                              Binding="{Binding FileSize}"/>
+                            <DataGridTextColumn Header="{DynamicResource TransferTime}"
+                                              Binding="{Binding TransferTime}"/>
+                            <DataGridTextColumn Header="{DynamicResource Status}"
+                                              Binding="{Binding Status, Converter={StaticResource EnumLocConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

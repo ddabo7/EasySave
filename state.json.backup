@@ -1,0 +1,112 @@
+{
+  "Sauvegarde1": {
+    "name": "",
+    "lastActionTime": "2025-01-31T19:49:28.321423+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "/Users/djibrildabo/Documents/EASYSAVE/TestSource/subdir/file3.txt",
+    "currentTargetFile": "/Users/djibrildabo/Documents/EASYSAVE/TestBackup/Backup1/subdir/file3.txt"
+  },
+  "Sauvegarde2": {
+    "name": "",
+    "lastActionTime": "2025-01-31T19:49:28.326863+01:00",
+    "status": "Completed",
+    "totalFiles": 2,
+    "totalSize": 24,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "/Users/djibrildabo/Documents/EASYSAVE/TestSource/subdir/file3.txt",
+    "currentTargetFile": "/Users/djibrildabo/Documents/EASYSAVE/TestBackup/Backup2/file3.txt"
+  },
+  "Backup_2025-02-03_15-17-14": {
+    "name": "Backup_2025-02-03_15-17-14",
+    "lastActionTime": "2025-02-03T15:17:36.537388+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "Backup_2025-02-03_15-17-27": {
+    "name": "Backup_2025-02-03_15-17-27",
+    "lastActionTime": "2025-02-03T15:17:36.557304+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "Backup_2025-02-03_15-26-54": {
+    "name": "Backup_2025-02-03_15-26-54",
+    "lastActionTime": "2025-02-03T15:27:39.705482+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "Backup_2025-02-03_15-27-20": {
+    "name": "Backup_2025-02-03_15-27-20",
+    "lastActionTime": "2025-02-03T15:27:39.72852+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "toto": {
+    "name": "toto",
+    "lastActionTime": "2025-02-04T15:08:23.306191+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "TestDifferentiel": {
+    "name": "TestDifferentiel",
+    "lastActionTime": "2025-02-05T16:40:52.631437+01:00",
+    "status": "Completed",
+    "totalFiles": 5,
+    "totalSize": 87,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "SauvegardeTestMardi": {
+    "name": "SauvegardeTestMardi",
+    "lastActionTime": "2025-02-05T16:40:52.671625+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  },
+  "Backup_2025-02-04_13-59-15": {
+    "name": "Backup_2025-02-04_13-59-15",
+    "lastActionTime": "2025-02-05T16:40:52.668221+01:00",
+    "status": "Completed",
+    "totalFiles": 4,
+    "totalSize": 48,
+    "remainingFiles": 0,
+    "remainingSize": 0,
+    "currentSourceFile": "",
+    "currentTargetFile": ""
+  }
+}

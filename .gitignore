@@ -1,0 +1,52 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Distribution directory - ignore all except executables
+dist/**
+!dist/**/*.exe
+!dist/**/*.app
+!dist/**/EasySave
+
+# NuGet specific files
+*.nuget.cache
+*.nuget.dgspec.json
+*.nuget.g.props
+*.nuget.g.targets
+project.assets.json
+project.nuget.cache
+
+# Visual Studio / VS Code specific files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Logs
+EasySave/Logs/Backups/*.json
+EasySave/Logs/Daily/*.json
+EasySave/Logs/State/*.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride

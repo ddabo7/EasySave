@@ -1,0 +1,11 @@
+{
+  "Language": "fr",
+  "LogFormat": "JSON",
+  "BusinessSoftware": [],
+  "PriorityExtensions": [],
+  "EncryptExtensions": [],
+  "MaxParallelJobs": 5,
+  "LargeFileThreshold": 1048576,
+  "NetworkLoadThreshold": 80,
+  "MonitorNetworkLoad": true
+}

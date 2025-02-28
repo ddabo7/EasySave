@@ -1,0 +1,159 @@
+@startuml EasySave Class Diagram
+
+package "EasySave" {
+    class Program {
+        + {static} Main(): Task
+    }
+}
+
+package "Core" {
+    class BackupManager {
+        - backupJobs: List<BackupJob>
+        - stateManager: StateManager
+        - logger: ILogManager
+        - logsPath: string
+        - cryptoService: CryptoSoftService
+        - businessSoftwareService: BusinessSoftwareService
+        - _cancellationTokenSource: CancellationTokenSource
+        - n: int
+        - NetworkLoadThreshold: int
+        - MaxParallelTasks: int
+        - _syncContext: SynchronizationContext
+        + OnBackupComplete: event Action<string, bool, string?>
+        + OnProgress: event Action<string, int>
+        + UpdateLogger(): void
+        + ExecuteJobs(): Task
+        + PauseJob(jobName: string): void
+        + ResumeJob(jobName: string): void
+        + StopJob(jobName: string): void
+        - GetDailyLogsDirectory(): string
+        - LoadExistingBackups(): void
+    }
+
+    class StateManager {
+        - stateFile: string
+        + SaveState(state: object): void
+        + LoadState<T>(): T
+        + UpdateState(jobState: JobState): void
+    }
+
+    class BackupJob {
+        + Name: string
+        + SourcePath: string
+        + TargetPath: string
+        + Type: BackupType
+        + Status: BackupStatus
+        + Progress: int
+        + IsPaused: bool
+        + IsStopped: bool
+        + Priority: int
+        + FileSize: long
+    }
+}
+
+package "Models" {
+    enum BackupType {
+        FULL
+        DIFFERENTIAL
+    }
+
+    enum BackupStatus {
+        WAITING
+        IN_PROGRESS
+        PAUSED
+        COMPLETED
+        ERROR
+        STOPPED
+    }
+
+    class Settings {
+        + LogFormat: string
+        + Language: string
+        + BusinessSoftware: List<string>
+        + PriorityExtensions: List<string>
+    }
+
+    class JobState {
+        + Name: string
+        + Status: BackupStatus
+        + Progress: int
+        + FileSize: long
+        + LastUpdated: DateTime
+    }
+}
+
+package "Services" {
+    class CryptoSoftService {
+        - instance: Mutex
+        + EncryptFile(sourcePath: string, targetPath: string): Task<bool>
+        + IsRunning(): bool
+    }
+
+    class BusinessSoftwareService {
+        - businessSoftware: List<string>
+        + IsBusinessSoftwareRunning(): bool
+        + UpdateBusinessSoftwareList(software: List<string>): void
+    }
+
+    interface ILogManager {
+        + LogTransfer(transferInfo: TransferInfo): void
+        + GetAvailableLogDates(): List<DateTime>
+        + ReadLogs(date: DateTime): List<TransferInfo>
+    }
+
+    class JsonLogManager {
+        - logDirectory: string
+        + LogTransfer(transferInfo: TransferInfo): void
+        + GetAvailableLogDates(): List<DateTime>
+        + ReadLogs(date: DateTime): List<TransferInfo>
+    }
+
+    class XmlLogManager {
+        - logDirectory: string
+        + LogTransfer(transferInfo: TransferInfo): void
+        + GetAvailableLogDates(): List<DateTime>
+        + ReadLogs(date: DateTime): List<TransferInfo>
+    }
+}
+
+package "MVVM" {
+    class MainWindow {
+        + ViewModel: MainViewModel
+    }
+
+    class MainViewModel {
+        - backupManager: BackupManager
+        + BackupJobs: ObservableCollection<BackupJob>
+        + SelectedJob: BackupJob
+        + PauseCommand: ICommand
+        + ResumeCommand: ICommand
+        + StopCommand: ICommand
+        + UpdateProgress(jobName: string, progress: int): void
+        + UpdateJobStatus(jobName: string, status: BackupStatus): void
+    }
+
+    class RelayCommand {
+        - execute: Action<object>
+        - canExecute: Func<object, bool>
+        + Execute(parameter: object): void
+        + CanExecute(parameter: object): bool
+    }
+}
+
+' Relations
+Program --> MainWindow
+MainWindow --> MainViewModel
+MainViewModel --> BackupManager
+MainViewModel --> RelayCommand
+BackupManager --> StateManager
+BackupManager --> BackupJob
+BackupManager --> ILogManager
+BackupManager --> CryptoSoftService
+BackupManager --> BusinessSoftwareService
+StateManager ..> JobState
+BackupJob --> BackupType
+BackupJob --> BackupStatus
+JsonLogManager ..|> ILogManager
+XmlLogManager ..|> ILogManager
+
+@enduml

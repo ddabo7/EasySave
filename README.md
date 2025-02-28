@@ -133,29 +133,6 @@ L'application suit une architecture MVVM (Model-View-ViewModel) avec :
 - Validation des entrées utilisateur
 - Gestion sécurisée des connexions TCP
 
-## Support
-
-Pour toute question ou problème, veuillez :
-1. Consulter la documentation
-2. Vérifier les logs
-3. Ouvrir une issue sur le dépôt
-
-## Contribution
-
-1. Fork du projet
-2. Création d'une branche pour votre fonctionnalité
-3. Commit de vos changements
-4. Push vers la branche
-5. Création d'une Pull Request
-
-## Licence
-
-[À définir]
-
-## Contact
-
-[À définir]
-
 ## Évolutions futures
 
 - Amélioration de la console déportée
